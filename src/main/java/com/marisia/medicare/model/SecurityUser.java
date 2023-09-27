@@ -24,6 +24,10 @@ public class SecurityUser implements UserDetails {
     return user.getPassword();
   }
 
+  static String appendRole(String value) {
+    return "ROLE_" + value;
+  }
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return Arrays
@@ -31,6 +35,7 @@ public class SecurityUser implements UserDetails {
             user
                 .getRoles()
                 .split(","))
+        .map((SecurityUser::appendRole))
         .map(SimpleGrantedAuthority::new).toList();
   }
 
