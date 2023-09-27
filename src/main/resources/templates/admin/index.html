@@ -1,0 +1,27 @@
+<div layout:decorate="~{admin/base}" layout:fragment="content">
+  <h2>Medicines</h2>
+  <div class="table-responsive small">
+    <table class="table table-striped table-hover table-sm">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Description</th>
+          <th scope="col">Enabled?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="m : ${medicines}">
+          <td th:text="${m.id}"></td>
+          <td th:text="${m.name}"></td>
+          <td th:text="${#numbers.formatDecimal(m.price, 1, 2)}"></td>
+          <td th:text="${m.description}"></td>
+          <td>
+            <i th:class=" ${m.enabled}? 'bi bi-check2-circle text-success' : 'bi bi-x-circle text-danger'"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
