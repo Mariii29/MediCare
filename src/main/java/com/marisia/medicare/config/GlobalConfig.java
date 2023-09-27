@@ -21,8 +21,4 @@ public class GlobalConfig {
     return new FileSystemStorage(properties);
   }
 
-  @Bean
-  StorageProperties storageProperties() {
-    return new StorageProperties();
-  }
 }
