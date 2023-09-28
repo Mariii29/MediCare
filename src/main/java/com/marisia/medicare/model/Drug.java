@@ -26,7 +26,7 @@ public class Drug {
   private String seller;
 
   @NotNull
-  @Size(min = 20, max = 120, message = "Description should be between 20 and 120 characters")
+  @Size(min = 20, max = 360, message = "Description should be between 20 and 360 characters")
   String description;
   Boolean enabled;
 

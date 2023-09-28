@@ -30,7 +30,10 @@
             class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
           ></ul>
 
-          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 w-50" role="search">
+          <form
+            class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 w-50"
+            role="search"
+          >
             <input
               type="search"
               class="form-control"
@@ -39,13 +42,24 @@
             />
           </form>
 
-          <div class="dropdown text-end col-12 col-lg-auto" sec:authorize="isAuthenticated()">
+          <div
+            class="dropdown text-end col-12 col-lg-auto d-flex justify-content-between"
+            sec:authorize="isAuthenticated()"
+          >
+            <button class="btn btn-outline-primary rounded me-4">
+              <i class="bi bi-cart2"></i>
+            </button>
+            <div
+            class="dropdown"
+            sec:authorize="isAuthenticated()"
+          >
             <a
               href="#"
               class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
+              <span sec:authentication="name"></span>
               <img
                 th:src="@{/files/avatars/user}"
                 alt="mdo"
@@ -53,7 +67,6 @@
                 height="32"
                 class="rounded-circle border border-4"
               />
-              <span sec:authentication="name"></span>
             </a>
             <ul class="dropdown-menu text-small" style="">
               <li>
@@ -71,6 +84,9 @@
               </li>
             </ul>
           </div>
+          </div>
+
+          
           <div class="text-end" sec:authorize="!isAuthenticated()">
             <a th:href="@{/login}" class="btn btn-light text-dark me-2">
               Login
@@ -80,7 +96,7 @@
         </div>
       </div>
     </header>
-    <div class="container-fluid">
+    <div class="container-fluid mx-auto w-75">
       <div layout:fragment="content"></div>
     </div>
 
