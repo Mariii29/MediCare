@@ -2,12 +2,12 @@ package com.marisia.medicare.repository;
 
 import java.util.Optional;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.marisia.medicare.model.Drug;
 
 
-public interface DrugRepository extends CrudRepository<Drug, Long> {
+public interface DrugRepository extends JpaRepository<Drug, Long> {
 
   Iterable<Drug> findByEnabled(boolean enabled);
 
