@@ -7,7 +7,7 @@
   />
   <label th:for="${field}" th:text="${label}"> Default Label </label>
   <div
-    th:if="${!hasErrors}"
+    th:if="${hasErrors}"
     th:errors="*{__${field}__}"
     class="invalid-feedback"
   >
@@ -25,7 +25,7 @@
   />
   <label th:for="${field}" th:text="${label}">Default Label</label>
   <div
-    th:if="${!hasErrors}"
+    th:if="${hasErrors}"
     th:errors="*{__${field}__}"
     class="invalid-feedback"
   >
@@ -43,7 +43,7 @@
   />
   <label th:for="${field}" th:text="${label}">Default Label</label>
   <div
-    th:if="${!hasErrors}"
+    th:if="${hasErrors}"
     th:errors="*{__${field}__}"
     class="invalid-feedback"
   >

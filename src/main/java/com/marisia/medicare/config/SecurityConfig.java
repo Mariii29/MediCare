@@ -47,6 +47,7 @@ public class SecurityConfig {
         .formLogin(form -> form
             .loginPage("/login")
             .defaultSuccessUrl("/", false))
+        .rememberMe(Customizer.withDefaults())
         .logout(
             (logout) -> logout
                 .addLogoutHandler(clearSiteData)

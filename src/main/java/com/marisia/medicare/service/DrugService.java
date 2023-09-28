@@ -24,4 +24,12 @@ public class DrugService {
     return drugRepository.findById(id).orElse(null);
   }
 
+  public boolean drugWithNameAlreadyExists(String name) {
+    return drugRepository.findByName(name).isPresent();
+  }
+
+  public Drug addDrug(Drug drug) {
+    return drugRepository.save(drug);
+  }
+
 }
