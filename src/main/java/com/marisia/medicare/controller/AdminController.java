@@ -3,6 +3,7 @@ package com.marisia.medicare.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +36,7 @@ public class AdminController {
     return mv;
   }
 
-  @GetMapping("/drugs")
+  @RequestMapping("/drugs")
   public String allDrugs(Model model, @RequestHeader(value = "HX-Request", required = false) String htmxRequestHeader,
       @RequestParam(value = "_hxm", required = false) String htmxRequestParameter) {
 
@@ -134,6 +135,17 @@ public class AdminController {
     drugService.addDrug(drugData);
 
     return "redirect:/admin/add-drug?success&message=Saved";
+  }
+
+  @DeleteMapping("/delete-drug/{id}")
+  public String deleteDrug(@PathVariable("id") Long id) {
+    var drug = drugService.findById(id);
+
+    if (drug != null) {
+      drugService.delete(drug);
+    }
+
+    return "redirect:/admin/drugs";
   }
 
 }

@@ -3,6 +3,8 @@
   <head th:fragment="head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <title>All Drugs</title>
     <link
       rel="stylesheet"
@@ -152,5 +154,7 @@
 
     <script src="/static/lib/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="/static/lib/htmx.org@1.9.6.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/static/js/main.js"></script>
   </body>
 </html>

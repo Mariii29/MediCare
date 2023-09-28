@@ -27,15 +27,24 @@
         ></i>
       </td>
       <td>
-        <button
-          hx:get="@{'/admin/edit-drug/' + ${m.id}}"
-          hx-target="#drugFormModal"
-          data-bs-target="#drugFormModal"
-          data-bs-toggle="modal"
-          class="btn btn-light btn-sm text-dark"
-        >
-          <i class="bi bi-pencil-square"></i>
-        </button>
+        <div class="btn-group">
+          <button
+            hx:get="@{'/admin/edit-drug/' + ${m.id}}"
+            hx-target="#drugFormModal"
+            data-bs-target="#drugFormModal"
+            data-bs-toggle="modal"
+            class="btn btn-light btn-sm text-dark"
+          >
+            <i class="bi bi-pencil-square"></i>
+          </button>
+          <button
+            class="btn btn-danger btn-sm"
+            onclick="deleteDrug(this)"
+            th:attr="data-drug-name=${m.name}, data-drug-seller=${m.seller}, data-drug-id=${m.id}"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
       </td>
     </tr>
   </tbody>

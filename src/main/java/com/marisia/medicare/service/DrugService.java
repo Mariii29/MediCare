@@ -51,4 +51,8 @@ public class DrugService {
     return drugRepository.save(mDrug);
   }
 
+  public void delete(Drug drug) {
+    drugRepository.delete(drug);
+  }
+
 }
