@@ -1,20 +1,18 @@
 package com.marisia.medicare.controller;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.marisia.medicare.model.AppUser;
 import com.marisia.medicare.model.Drug;
-import com.marisia.medicare.model.SecurityUser;
 import com.marisia.medicare.service.DrugService;
 
 import jakarta.validation.Valid;
@@ -52,6 +50,55 @@ public class AdminController {
     }
   }
 
+  @GetMapping("/edit-drug/{id}")
+  public String editDrug(Model model, @PathVariable("id") Long id) {
+
+    var drug = drugService.findById(id);
+    if (drug != null) {
+      model.addAttribute("drug", drug);
+      model.addAttribute("postLocation", String.format("/admin/edit-drug/%d", id));
+    } else {
+      return "redirect:/admin/add-drug";
+    }
+
+    return "admin/_drug_form";
+  }
+
+  @PostMapping("/edit-drug/{id}")
+  public String updateDrug(Model model,
+      @PathVariable("id") Long id,
+      @Valid @ModelAttribute("drug") Drug drugData,
+      BindingResult result) {
+
+    boolean hasErrors = false;
+
+    if (drugService.drugWithNameAlreadyExists(drugData.getName(), id)) {
+      result.rejectValue("name",
+          "error.drug",
+          "Drug with name: " + drugData.getName() + " already exists!");
+      hasErrors = true;
+    }
+
+    if (result.hasErrors()) {
+      hasErrors = true;
+    }
+
+    String postLocation = String.format("/admin/edit-drug/%d", id);
+    if (hasErrors) {
+      model.addAttribute("postLocation", postLocation);
+      return "admin/_drug_form";
+    }
+
+    drugData.setId(id);
+
+    var drug = drugService.update(drugData);
+    model.addAttribute("drug", drug);
+    model.addAttribute("postLocation", postLocation);
+
+    var redirectUrl = String.format("%s?success&message=Updated", postLocation);
+    return "redirect:" + redirectUrl;
+  }
+
   @GetMapping("/add-drug")
   public ModelAndView newDrugForm() {
     var mv = new ModelAndView("admin/_drug_form.html");
@@ -84,13 +131,9 @@ public class AdminController {
       return "admin/_drug_form";
     }
 
-    var authentication = SecurityContextHolder.getContext().getAuthentication();
-    var user = (SecurityUser) authentication.getPrincipal();
-    drugData.setSeller(user.getUser());
     drugService.addDrug(drugData);
 
-    return "redirect:/admin/add-drug";
-
+    return "redirect:/admin/add-drug?success&message=Saved";
   }
 
 }

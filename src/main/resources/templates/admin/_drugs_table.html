@@ -7,6 +7,7 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Name</th>
+      <th scope="col">Seller</th>
       <th scope="col">Price</th>
       <th scope="col">Description</th>
       <th scope="col">Enabled?</th>
@@ -17,6 +18,7 @@
     <tr th:each="m : ${drugs}">
       <td th:text="${m.id}"></td>
       <td th:text="${m.name}"></td>
+      <td th:text="${m.seller}"></td>
       <td th:text="${#numbers.formatDecimal(m.price, 1, 2)}"></td>
       <td th:text="${m.description}"></td>
       <td>
@@ -25,7 +27,13 @@
         ></i>
       </td>
       <td>
-        <button hx:get="@{/admin/edit-drug}" class="btn btn-light btn-sm text-dark">
+        <button
+          hx:get="@{'/admin/edit-drug/' + ${m.id}}"
+          hx-target="#drugFormModal"
+          data-bs-target="#drugFormModal"
+          data-bs-toggle="modal"
+          class="btn btn-light btn-sm text-dark"
+        >
           <i class="bi bi-pencil-square"></i>
         </button>
       </td>
