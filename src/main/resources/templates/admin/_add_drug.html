@@ -1,0 +1,73 @@
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <form
+      class="needs-validation"
+      th:action="@{/add-drug}"
+      method="post"
+      th:object="${drug}"
+      enctype="multipart/form-data"
+      novalidate
+    >
+      <div class="modal-header">
+        <div
+          class="w-100 d-flex justify-content-between align-items-center modal-title"
+        >
+          <h5>New Drug</h5>
+          <button
+            type="button"
+            class="btn btn-outline-dark"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-2 g-2">
+          <div class="col col-md-6">
+            <div
+              th:replace="~{form_fields :: textField(
+                field='name', 
+                label='Name', 
+                hasErrors=${#fields.hasErrors('name')}
+                )}"
+            ></div>
+          </div>
+          <div class="col col-md-6">
+            <div
+              th:replace="~{form_fields :: numberField(
+                field='price', 
+                label='Price', 
+                hasErrors=${#fields.hasErrors('price')},
+                )}"
+            ></div>
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="col-12">
+            <div
+              th:replace="~{form_fields :: textAreaField(
+              field='description', 
+              label='Description', 
+              hasErrors=${#fields.hasErrors('description')}
+              )}"
+            ></div>
+          </div>
+          <div class="col-12">
+            <div
+              th:replace="~{form_fields :: checkboxField(
+              field='enabled',
+              label='Is Enabled?'
+            )}"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+          Add
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

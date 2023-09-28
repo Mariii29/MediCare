@@ -7,34 +7,34 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.marisia.medicare.model.Medicine;
-import com.marisia.medicare.service.MedicineService;
+import com.marisia.medicare.model.Drug;
+import com.marisia.medicare.service.DrugService;
 
 @Controller
-@RequestMapping("/medicines")
-public class MedicineController {
+@RequestMapping("/drugs")
+public class DrugController {
 
-  private final MedicineService medicineService;
+  private final DrugService drugService;
 
-  public MedicineController(MedicineService medicineService) {
-    this.medicineService = medicineService;
+  public DrugController(DrugService drugService) {
+    this.drugService = drugService;
   }
 
   @PreAuthorize("hasRole('USER')")
   @GetMapping
-  public ModelAndView getAllMedicines() {
+  public ModelAndView getAllDrugs() {
     var mv = new ModelAndView();
     mv.setViewName("all");
-    mv.getModel().put("medicines", medicineService.findAll());
+    mv.getModel().put("drugs", drugService.findAll());
 
     return mv;
   }
 
   @GetMapping("/{id}")
-  public ModelAndView getMedicine(@PathVariable("id") Medicine medicine) {
+  public ModelAndView getDrug(@PathVariable("id") Drug drug) {
     var mv = new ModelAndView();
     mv.setViewName("detail");
-    mv.getModel().put("medicine", medicine);
+    mv.getModel().put("drug", drug);
 
     return mv;
   }

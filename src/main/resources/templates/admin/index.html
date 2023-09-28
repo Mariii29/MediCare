@@ -1,5 +1,15 @@
 <div layout:decorate="~{admin/base}" layout:fragment="content">
-  <h2>Medicines</h2>
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Drugs</h2>
+    <a
+      hx:get="@{/admin/add-drug}"
+      hx-target="#addDrugForm"
+      data-bs-toggle="modal"
+      data-bs-target="#addDrugForm"
+      class="btn btn-dark"
+      >Add Drug <i class="bi bi-plus-lg"></i
+    ></a>
+  </div>
   <div class="table-responsive small">
     <table class="table table-striped table-hover table-sm">
       <thead class="table-dark">
@@ -12,16 +22,29 @@
         </tr>
       </thead>
       <tbody>
-        <tr th:each="m : ${medicines}">
+        <tr th:each="m : ${drugs}">
           <td th:text="${m.id}"></td>
           <td th:text="${m.name}"></td>
           <td th:text="${#numbers.formatDecimal(m.price, 1, 2)}"></td>
           <td th:text="${m.description}"></td>
           <td>
-            <i th:class=" ${m.enabled}? 'bi bi-check2-circle text-success' : 'bi bi-x-circle text-danger'"></i>
+            <i
+              th:class=" ${m.enabled}? 'bi bi-check2-circle text-success' : 'bi bi-x-circle text-danger'"
+            ></i>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+  <div
+    id="addDrugForm"
+    class="modal modal-blur fade"
+    style="display: none"
+    aria-hidden="fals"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content"></div>
+    </div>
   </div>
 </div>
