@@ -1,5 +1,8 @@
 package com.marisia.medicare.service;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +19,10 @@ public class DrugService {
     return drugRepository.findAll();
   }
 
-  public Iterable<Drug> findAllEnabled() {
-    return drugRepository.findByEnabled(true);
+  public List<Drug> findAllEnabled() {
+    var drugs = drugRepository.findByEnabled(true);
+    Collections.shuffle(drugs);
+    return drugs;
   }
 
   public Drug findById(Long id) {
@@ -47,6 +52,7 @@ public class DrugService {
     mDrug.setEnabled(drug.getEnabled());
     mDrug.setPrice(drug.getPrice());
     mDrug.setSeller(drug.getSeller());
+    mDrug.setQuantity(drug.getQuantity());
 
     return drugRepository.save(mDrug);
   }

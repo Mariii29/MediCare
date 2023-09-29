@@ -10,7 +10,7 @@
               Drug Name
             </h3>
             <p
-              th:text="${#strings.length(d.description) > 50 ? #strings.substring(d.description, 0, 100) + '...' : d.description}"
+              th:text="${#strings.length(d.description) > 100 ? #strings.substring(d.description, 0, 100) + '...' : d.description}"
             >
               Description
             </p>
@@ -19,10 +19,31 @@
                 <span th:text="${d.seller}">Seller</span>
               </li>
               <li class="d-flex align-items-center me-3"></li>
-              <li class="d-flex align-items-center">
-                <button class="btn btn-outline-light">
+              <li class="d-flex align-items-center" sec:authorize="isAuthenticated()">
+                <a
+                  th:if="${d.inStock()}"
+                  class="btn btn-outline-light"
+                  hx:post="@{'/add-to-cart/' + ${d.id}}"
+                  hx-target="#cartButton"
+                  hx-swap="outerHTML"
+                >
                   <i class="bi bi-plus-lg"></i> Add to cart
+                </a>
+                <button th:unless="${d.inStock()}" disabled="disabled" class="btn btn-outline-light">
+                  <i class="bi bi-x-lg"></i> Out of Stock
                 </button>
+              </li>
+              <li class="d-flex align-items-center" sec:authorize="!isAuthenticated()">
+                <a
+                  th:if="${d.inStock()}"
+                  class="btn btn-outline-light"
+                  th:href="@{/login}"
+                >
+                  <i class="bi bi-plus-lg"></i> Add to cart
+                </a>
+                <a th:unless="${d.inStock()}" th:href="@{/login}" class="btn btn-outline-light">
+                  <i class="bi bi-x-lg"></i> Out of Stock
+                </a>
               </li>
             </ul>
           </div>

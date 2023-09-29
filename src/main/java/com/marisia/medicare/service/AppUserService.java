@@ -1,6 +1,7 @@
 package com.marisia.medicare.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,6 +30,20 @@ public class AppUserService implements UserDetailsService {
 
   public AppUser registerUser(AppUser user) {
     return userRepository.save(user);
+  }
+
+  public AppUser getCurrentUser() {
+    var authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication == null || !authentication.isAuthenticated()) {
+      return null;
+    }
+
+    if (authentication.getPrincipal() instanceof SecurityUser) {
+      var securityUser = (SecurityUser) authentication.getPrincipal();
+      return securityUser.getUser();
+    }
+
+    return null;
   }
 
 }

@@ -10,6 +10,7 @@
       <th scope="col">Seller</th>
       <th scope="col">Price</th>
       <th scope="col">Description</th>
+      <th scope="col">Quantity</th>
       <th scope="col">Enabled?</th>
       <th scope="col"></th>
     </tr>
@@ -20,7 +21,8 @@
       <td th:text="${m.name}"></td>
       <td th:text="${m.seller}"></td>
       <td th:text="${#numbers.formatDecimal(m.price, 1, 2)}"></td>
-      <td th:text="${m.description}"></td>
+      <td th:text="${#strings.length(m.description) > 50 ? #strings.substring(m.description, 0, 50) + '...' : m.description}"></td>
+      <th th:text="${#numbers.formatDecimal(m.quantity, 1, 0)}"></th>
       <td>
         <i
           th:class=" ${m.enabled}? 'bi bi-check2-circle text-success' : 'bi bi-x-circle text-danger'"

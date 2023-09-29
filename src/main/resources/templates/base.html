@@ -2,7 +2,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <meta name="generator" content="Hugo 0.118.2" />
     <title layout:fragment="title">MediCare</title>
 
@@ -46,47 +47,41 @@
             class="dropdown text-end col-12 col-lg-auto d-flex justify-content-between"
             sec:authorize="isAuthenticated()"
           >
-            <button class="btn btn-outline-primary rounded me-4">
-              <i class="bi bi-cart2"></i>
-            </button>
-            <div
-            class="dropdown"
-            sec:authorize="isAuthenticated()"
-          >
-            <a
-              href="#"
-              class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <span sec:authentication="name"></span>
-              <img
-                th:src="@{/files/avatars/user}"
-                alt="mdo"
-                width="32"
-                height="32"
-                class="rounded-circle border border-4"
-              />
-            </a>
-            <ul class="dropdown-menu text-small" style="">
-              <li>
-                <a
-                  class="dropdown-item"
-                  th:href="@{/admin}"
-                  sec:authorize="hasRole('ADMIN')"
-                  >Management</a
-                >
-              </li>
-              <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a class="dropdown-item" th:href="@{/logout}">Sign out</a>
-              </li>
-            </ul>
-          </div>
+            <button th:replace="~{_cart_button}"></button>
+            <div class="dropdown">
+              <a
+                href="#"
+                class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <span sec:authentication="name"></span>
+                <img
+                  th:src="@{/files/avatars/user}"
+                  alt="mdo"
+                  width="32"
+                  height="32"
+                  class="rounded-circle border border-4"
+                />
+              </a>
+              <ul class="dropdown-menu text-small" style="">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    th:href="@{/admin}"
+                    sec:authorize="hasRole('ADMIN')"
+                    >Management</a
+                  >
+                </li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" th:href="@{/logout}">Sign out</a>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          
           <div class="text-end" sec:authorize="!isAuthenticated()">
             <a th:href="@{/login}" class="btn btn-light text-dark me-2">
               Login
@@ -102,5 +97,6 @@
 
     <script src="/static/lib/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="/static/lib/htmx.org@1.9.6.js"></script>
+    <script src="/static/js/main.js"></script>
   </body>
 </html>

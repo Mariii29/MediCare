@@ -1,10 +1,13 @@
 package com.marisia.medicare.model;
 
+import java.util.List;
+
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 
@@ -30,6 +33,13 @@ public class Drug {
   String description;
   Boolean enabled;
 
+  @ManyToMany(targetEntity = Cart.class)
+  List<Cart> carts;
+
+  @NotNull
+  @Min(value = 0, message = "The quantity can not be less than 0")
+  Integer quantity = 0;
+
   public Drug() {
   }
 
@@ -49,7 +59,7 @@ public class Drug {
     this.enabled = enabled;
     this.seller = seller;
   }
-  
+
   public Long getId() {
     return id;
   }
@@ -104,6 +114,26 @@ public class Drug {
 
   public boolean isNew() {
     return id == null;
+  }
+
+  public List<Cart> getCarts() {
+    return carts;
+  }
+
+  public void setCarts(List<Cart> carts) {
+    this.carts = carts;
+  }
+
+  public Integer getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Integer quantity) {
+    this.quantity = quantity;
+  }
+
+  public boolean inStock() {
+    return quantity > 0;
   }
 
 }
