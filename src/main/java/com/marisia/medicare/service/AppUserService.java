@@ -54,6 +54,10 @@ public class AppUserService implements UserDetailsService {
     return userRepository.findById(1).get();
   }
 
+  public Iterable<AppUser> getAllCustomers() {
+    return userRepository.findAllCustomers();
+  }
+
   public AppUser save(AppUser user) {
     return userRepository.save(user);
   }

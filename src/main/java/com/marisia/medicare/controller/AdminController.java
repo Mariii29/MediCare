@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.marisia.medicare.model.AppUser;
 import com.marisia.medicare.model.Drug;
+import com.marisia.medicare.service.AppUserService;
+import com.marisia.medicare.service.CartService;
 import com.marisia.medicare.service.DrugService;
 
 import jakarta.validation.Valid;
@@ -22,9 +25,13 @@ import jakarta.validation.Valid;
 @RequestMapping("/admin")
 public class AdminController {
   private final DrugService drugService;
+  private final CartService cartService;
+  private final AppUserService userService;
 
-  public AdminController(DrugService drugService) {
+  public AdminController(DrugService drugService, CartService cartService, AppUserService userService) {
     this.drugService = drugService;
+    this.cartService = cartService;
+    this.userService = userService;
   }
 
   @GetMapping
@@ -146,6 +153,20 @@ public class AdminController {
     }
 
     return "redirect:/admin/drugs";
+  }
+
+  @GetMapping("/customers")
+  public String customers(Model model) {
+    model.addAttribute("customers", userService.getAllCustomers());
+
+    return "admin/customers.html";
+  }
+
+  @GetMapping("/orders")
+  public String orders(Model model) {
+    model.addAttribute("orders", cartService.getOrders());
+
+    return "admin/orders.html";
   }
 
 }

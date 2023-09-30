@@ -16,6 +16,10 @@ public class CartService {
     return repository.findByOwnerAndIsCheckedOutFalse(user).orElse(new Cart(user));
   }
 
+  public Iterable<Cart> getOrders() {
+    return repository.isCheckedOutTrue();
+  }
+
   public Cart save(Cart cart) {
     return repository.save(cart);
   }

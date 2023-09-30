@@ -1,7 +1,6 @@
 package com.marisia.medicare.controller;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.marisia.medicare.model.AppUser;
-import com.marisia.medicare.model.Cart;
 import com.marisia.medicare.model.Payment;
 import com.marisia.medicare.service.AppUserService;
 import com.marisia.medicare.service.CartService;
@@ -115,6 +112,7 @@ public class MainController {
     if (payment.getComplete()) {
       cart.setIsCheckedOut(true);
       cart.setCheckedOutAt(Calendar.getInstance().getTime());
+      cart.setPayment(payment);
       cartService.save(cart);
     }
 

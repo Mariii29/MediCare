@@ -3,6 +3,7 @@ package com.marisia.medicare.model;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -39,7 +40,7 @@ public class Cart {
   Date checkedOutAt;
 
   @OneToOne
-  @JoinColumn(name = "payment_id", nullable = true)
+  @JoinColumn(name = "payment_id", nullable = true, unique = true)
   Payment payment;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
@@ -132,6 +133,21 @@ public class Cart {
     this.items = items;
   }
 
-  
+  public String by() {
+    return owner.getUsername();
+  }
+
+  public Float getValue() {
+    return payment.getAmount();
+  }
+
+  public String getItemsList() {
+    return items
+        .values()
+        .stream()
+        .map(
+            i -> String.format("%s (%d)", i.getName(), i.getQuantity()))
+        .collect(Collectors.joining(","));
+  }
 
 }
