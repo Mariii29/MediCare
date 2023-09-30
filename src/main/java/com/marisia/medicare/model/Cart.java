@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -24,7 +25,7 @@ public class Cart {
   @GeneratedValue
   Long id;
 
-  @ManyToMany(targetEntity = Drug.class,  fetch = FetchType.LAZY)
+  @ManyToMany(targetEntity = Drug.class, fetch = FetchType.LAZY)
   @JoinTable(name = "cart_drugs", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "drug_id"))
   List<Drug> drugs = new ArrayList<>();
 
@@ -41,6 +42,10 @@ public class Cart {
 
   @Temporal(TemporalType.TIMESTAMP)
   Date checkedOutAt;
+
+  @OneToOne
+  @JoinColumn(name = "payment_id")
+  Payment payment;
 
   public Cart() {
   }
