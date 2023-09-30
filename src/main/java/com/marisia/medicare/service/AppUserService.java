@@ -28,6 +28,10 @@ public class AppUserService implements UserDetailsService {
     return userRepository.findByUsername(username).isPresent();
   }
 
+  public boolean usernameAlreadyExists(Integer id, String username) {
+    return userRepository.findByUsername(username).get().getId() != id;
+  }
+
   public AppUser registerUser(AppUser user) {
     return userRepository.save(user);
   }
@@ -44,6 +48,10 @@ public class AppUserService implements UserDetailsService {
     }
 
     return null;
+  }
+
+  public AppUser save(AppUser user) {
+    return userRepository.save(user);
   }
 
 }

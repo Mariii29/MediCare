@@ -28,8 +28,6 @@ public class AppUser {
   @Column(unique = true)
   String username;
 
-  @NotNull
-  @NotBlank
   String password;
 
   @Transient

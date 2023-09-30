@@ -73,7 +73,16 @@
                     >Management</a
                   >
                 </li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    hx:get="@{users/get-profile}"
+                    hx-target="#modal"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal"
+                    >Profile</a
+                  >
+                </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
                   <a class="dropdown-item" th:href="@{/logout}">Sign out</a>
@@ -93,6 +102,17 @@
     </header>
     <div class="container-fluid mx-auto w-75">
       <div layout:fragment="content"></div>
+    </div>
+    <div
+      id="modal"
+      class="modal modal-blur fade"
+      style="display: none"
+      aria-hidden="false"
+      tabindex="-1"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content"></div>
+      </div>
     </div>
 
     <script src="/static/lib/bootstrap/bootstrap.bundle.min.js"></script>
