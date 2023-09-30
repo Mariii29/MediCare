@@ -15,6 +15,7 @@ public class PlatformPayment implements PaymentService {
 
   @Override
   public Payment make(Payment payment) {
+    payment.setComplete(true);
     return repository.save(payment);
   }
 

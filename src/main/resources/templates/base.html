@@ -47,7 +47,7 @@
             class="dropdown text-end col-12 col-lg-auto d-flex justify-content-between"
             sec:authorize="isAuthenticated()"
           >
-            <button th:replace="~{_cart_button}"></button>
+            <a th:replace="~{_cart_button}"></a>
             <div class="dropdown">
               <a
                 href="#"
@@ -100,6 +100,17 @@
         </div>
       </div>
     </header>
+    <div class="d-flex justify-content-center">
+      <div th:if="${param.message}" class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong th:text="${param.message}"></strong>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
     <div class="container-fluid mx-auto w-75">
       <div layout:fragment="content"></div>
     </div>

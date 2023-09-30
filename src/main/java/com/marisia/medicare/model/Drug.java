@@ -33,8 +33,8 @@ public class Drug {
   String description;
   Boolean enabled;
 
-  @ManyToMany(targetEntity = Cart.class)
-  List<Cart> carts;
+  @ManyToMany(targetEntity = CartItem.class)
+  List<CartItem> cartItems;
 
   @NotNull
   @Min(value = 0, message = "The quantity can not be less than 0")
@@ -116,14 +116,6 @@ public class Drug {
     return id == null;
   }
 
-  public List<Cart> getCarts() {
-    return carts;
-  }
-
-  public void setCarts(List<Cart> carts) {
-    this.carts = carts;
-  }
-
   public Integer getQuantity() {
     return quantity;
   }
@@ -134,6 +126,14 @@ public class Drug {
 
   public boolean inStock() {
     return quantity > 0;
+  }
+
+  public List<CartItem> getCartItems() {
+    return cartItems;
+  }
+
+  public void setCartItems(List<CartItem> cartItems) {
+    this.cartItems = cartItems;
   }
 
 }

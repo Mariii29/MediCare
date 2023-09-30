@@ -50,6 +50,10 @@ public class AppUserService implements UserDetailsService {
     return null;
   }
 
+  public AppUser getSystemAsUser() {
+    return userRepository.findById(1).get();
+  }
+
   public AppUser save(AppUser user) {
     return userRepository.save(user);
   }

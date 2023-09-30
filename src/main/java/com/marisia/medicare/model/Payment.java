@@ -13,6 +13,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Payment {
@@ -37,6 +39,23 @@ public class Payment {
 
   @OneToOne(mappedBy = "payment")
   Cart cart;
+
+  @Size(min = 10)
+  String phoneNumber;
+
+  @NotBlank
+  String address;
+
+  @NotBlank
+  String city;
+
+  @NotBlank
+  String account;
+
+  @NotBlank
+  String name;
+
+  Boolean complete = false;
 
   public Payment() {
   }
@@ -79,6 +98,62 @@ public class Payment {
 
   public void setAt(Date at) {
     this.at = at;
+  }
+
+  public Cart getCart() {
+    return cart;
+  }
+
+  public void setCart(Cart cart) {
+    this.cart = cart;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public String getCity() {
+    return city;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public String getAccount() {
+    return account;
+  }
+
+  public void setAccount(String account) {
+    this.account = account;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Boolean getComplete() {
+    return complete;
+  }
+
+  public void setComplete(Boolean complete) {
+    this.complete = complete;
   }
 
 }
