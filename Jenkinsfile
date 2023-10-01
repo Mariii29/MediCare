@@ -6,20 +6,25 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build') {
+        stage('Build Project') {
             steps {
                 script {
-                    // Build your Spring Boot application with Gradle
-                    sh './gradlew bootBuildImage --imageName=public.ecr.aws/p8x2g8s1/marisia:medicare'
+                    sh './gradlew build'
                 }
             }
         }
-
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t public.ecr.aws/p8x2g8s1/marisia/medicare:latest .'
+                }
+            }
+        }
         stage('Push Docker Image') {
             steps {
                 script {
                     // Push the Docker image to a AWS ECR
-                    sh 'docker push my-spring-boot-app:latest'
+                    sh 'docker push public.ecr.aws/p8x2g8s1/marisia/medicare:latest'
                 }
             }
         }
