@@ -10,20 +10,15 @@
 1. Select __Compute__
 1. Select __EC2__ for a Virtual Private Server in the cloud<br/>
 ![Alt text](documentation/select_ec2.png)
-<br/>
 1. Launch a new instance by selecting __Launch Instances__:
 ![Alt text](documentation/launch_ec2.png)
-<br/>
 1. Fill in the __Name__ of your server, and select the __Ubuntu OS__ image
 ![Alt text](documentation/name_and_image.png)
-<br/>
 1. Leave the __Instance Type__ section as is
 1. In the __Key Pair__ section, select __Create key pair__ fill in the details, and you will be prompted to download the key .pem file, and keep it in a Folder where it's easily accessible from your terminal.
 ![Alt text](documentation/key_pair.png)
-<br>
 1. In the __Network Settings__ section, select *Allow HTTPS traffic from the internet* and *Allow HTTP traffic from the internet*
 ![Alt text](documentation/network.png)
-<br/>
 1. Configure the storage requirements as you like, but we will be using the default __8 GiB gp2__ configuration
 1. Select __Launch Instance__ in the __Summary__ section:
 ![Alt text](documentation/complete_launch.png)
@@ -87,7 +82,6 @@ docker ps
 ```
 7. That's it setting up your CI/CD server, you can now access it using the public IP `http://13.49.75.177/`. __NOTE__: SSL has not been enabled.
 ![Alt text](documentation/jenkins_initial_password.png)
-<br/>
 8. You can find the administrator password at `/var/jenkins_home/secrets/initialAdminPassword
 ` since we are using docker the actual path in the host VM is `/opt/jenkins/home/secrets/initialAdminPassword`.
 8. Run: 
