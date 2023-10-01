@@ -1,0 +1,11 @@
+version: '3'
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins
+
+    ports:
+      - "80:8080"
+    volumes:
+      - ./home:/var/jenkins_home:w
+    restart: unless-stopped
