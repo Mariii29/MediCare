@@ -1,5 +1,12 @@
 version: '3'
 services:
+  docker-in-docker:
+    image: docker:dind
+    privileged: true
+    expose:
+      - 2375
+      - 2376
+      
   jenkins:
     container_name: jenkins
     image: jenkins/jenkins
@@ -9,3 +16,7 @@ services:
     volumes:
       - ./home:/var/jenkins_home:w
     restart: unless-stopped
+    links:
+      - docker-in-docker
+    environment:
+      DOCKER_HOST: tcp://docker-in-docker:2375
