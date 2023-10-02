@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mariadb:
+      localhost:
         image: "mariadb:latest"
         env:
           MARIADB_DATABASE: medicare
@@ -36,8 +36,6 @@ jobs:
 
       - name: Execute Gradle build
         run: ./gradlew build
-        env:
-          DB_HOST: mariadb
 
       - name: Archive Build Artifacts
         uses: actions/upload-artifact@v3
