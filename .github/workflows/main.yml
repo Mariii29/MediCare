@@ -40,7 +40,7 @@ jobs:
           MARIADB_PASSWORD: welcome
           MARIADB_ROOT_PASSWORD: welcome
         ports:
-          - 3306/tcp
+          - 3306:3306
 
     name: Build Docker Image and Push to ECR
     needs: build
