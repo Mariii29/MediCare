@@ -31,6 +31,17 @@ jobs:
           name: build-output
           path: build/libs/
   build_docker_image:
+    services:
+      mariadb:
+        image: "mariadb:latest"
+        env:
+          MARIADB_DATABASE: medicare
+          MARIADB_USER: root
+          MARIADB_PASSWORD: welcome
+          MARIADB_ROOT_PASSWORD: welcome
+        ports:
+          - 3306/tcp
+
     name: Build Docker Image and Push to ECR
     needs: build
     runs-on: ubuntu-latest
