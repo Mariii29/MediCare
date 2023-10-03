@@ -1,20 +1,21 @@
 package com.marisia.medicare.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -23,10 +24,6 @@ public class Cart {
   @Id
   @GeneratedValue
   Long id;
-
-  @ManyToMany(targetEntity = Drug.class,  fetch = FetchType.LAZY)
-  @JoinTable(name = "cart_drugs", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "drug_id"))
-  List<Drug> drugs = new ArrayList<>();
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "owner_id", nullable = false, updatable = false)
@@ -42,11 +39,17 @@ public class Cart {
   @Temporal(TemporalType.TIMESTAMP)
   Date checkedOutAt;
 
+  @OneToOne
+  @JoinColumn(name = "payment_id", nullable = true, unique = true)
+  Payment payment;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
+  Map<Drug, CartItem> items = new HashMap<>();
+
   public Cart() {
   }
 
-  public Cart(List<Drug> drugs, AppUser owner, Boolean isCheckedOut, Date checkedOutAt) {
-    this.drugs = drugs;
+  public Cart(AppUser owner, Boolean isCheckedOut, Date checkedOutAt) {
     this.owner = owner;
     this.isCheckedOut = isCheckedOut;
     this.checkedOutAt = checkedOutAt;
@@ -62,14 +65,6 @@ public class Cart {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public List<Drug> getDrugs() {
-    return drugs;
-  }
-
-  public void setDrugs(List<Drug> drugs) {
-    this.drugs = drugs;
   }
 
   public AppUser getOwner() {
@@ -105,11 +100,54 @@ public class Cart {
   }
 
   public int size() {
-    return drugs.size();
+    return items.size();
   }
 
   public void addToCart(Drug drug) {
-    drugs.add(drug);
+    var item = items.getOrDefault(drug, new CartItem(drug, this));
+    item.setQuantity(item.getQuantity() + 1);
+    items.put(drug, item);
+  }
+
+  public Double getTotalPrice() {
+    return items
+        .values()
+        .stream()
+        .mapToDouble(CartItem::getTotalPrice)
+        .sum();
+  }
+
+  public Payment getPayment() {
+    return payment;
+  }
+
+  public void setPayment(Payment payment) {
+    this.payment = payment;
+  }
+
+  public Map<Drug, CartItem> getItems() {
+    return items;
+  }
+
+  public void setItems(Map<Drug, CartItem> items) {
+    this.items = items;
+  }
+
+  public String by() {
+    return owner.getUsername();
+  }
+
+  public Float getValue() {
+    return payment.getAmount();
+  }
+
+  public String getItemsList() {
+    return items
+        .values()
+        .stream()
+        .map(
+            i -> String.format("%s (%d)", i.getName(), i.getQuantity()))
+        .collect(Collectors.joining(","));
   }
 
 }

@@ -9,4 +9,5 @@ import com.marisia.medicare.model.Cart;
 
 public interface CartRepository extends CrudRepository<Cart, Long> {
   Optional<Cart> findByOwnerAndIsCheckedOutFalse(AppUser owner);
+  Iterable<Cart> isCheckedOutTrue();
 }

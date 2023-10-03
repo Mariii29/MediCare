@@ -5,13 +5,13 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -27,8 +27,6 @@ public class AppUser {
   @Column(unique = true)
   String username;
 
-  @NotNull
-  @NotBlank
   String password;
 
   @Transient
@@ -41,14 +39,23 @@ public class AppUser {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
   List<Cart> carts;
 
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "to", fetch = FetchType.LAZY)
+  List<Payment> paymentsReceived;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "from", fetch = FetchType.LAZY)
+  List<Payment> paymentsMade;
+
+  String account;
+
   public AppUser() {
   }
 
-  public AppUser(Integer id, String username, String password, String roles) {
+  public AppUser(Integer id, String username, String password, String account, String roles) {
     this.id = id;
     this.username = username;
     this.password = password;
     this.roles = roles;
+    this.account = account;
   }
 
   public String getRoles() {
@@ -101,6 +108,22 @@ public class AppUser {
 
   public void setAvatarPath(String avatarPath) {
     this.avatarPath = avatarPath;
+  }
+
+  public List<Cart> getCarts() {
+    return carts;
+  }
+
+  public void setCarts(List<Cart> carts) {
+    this.carts = carts;
+  }
+
+  public String getAccount() {
+    return account;
+  }
+
+  public void setAccount(String account) {
+    this.account = account;
   }
 
 }

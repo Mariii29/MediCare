@@ -47,7 +47,7 @@
             class="dropdown text-end col-12 col-lg-auto d-flex justify-content-between"
             sec:authorize="isAuthenticated()"
           >
-            <button th:replace="~{_cart_button}"></button>
+            <a th:replace="~{_cart_button}"></a>
             <div class="dropdown">
               <a
                 href="#"
@@ -73,7 +73,16 @@
                     >Management</a
                   >
                 </li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    hx:get="@{users/get-profile}"
+                    hx-target="#modal"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal"
+                    >Profile</a
+                  >
+                </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
                   <a class="dropdown-item" th:href="@{/logout}">Sign out</a>
@@ -91,8 +100,30 @@
         </div>
       </div>
     </header>
+    <div class="d-flex justify-content-center">
+      <div th:if="${param.message}" class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong th:text="${param.message}"></strong>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
     <div class="container-fluid mx-auto w-75">
       <div layout:fragment="content"></div>
+    </div>
+    <div
+      id="modal"
+      class="modal modal-blur fade"
+      style="display: none"
+      aria-hidden="false"
+      tabindex="-1"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content"></div>
+      </div>
     </div>
 
     <script src="/static/lib/bootstrap/bootstrap.bundle.min.js"></script>
