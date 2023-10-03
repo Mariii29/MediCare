@@ -6,16 +6,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.marisia.medicare.service.storage.StorageFileNotFoundException;
 import com.marisia.medicare.service.storage.StorageService;
 
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @SpringBootTest
 public class FileStorageTests {
@@ -31,7 +32,7 @@ public class FileStorageTests {
     this.mvc.perform(get("/files/avatars/user")).andExpect(status().isOk());
   }
 
-  // @Test
+  @Test
   @WithMockUser
   public void should404WhenMissingFile() throws Exception {
     given(this.storageService.loadAsResource("test.txt"))
