@@ -62,12 +62,12 @@ jobs:
         id: short_sha
         run: |
           short_sha=$(git rev-parse --short HEAD)
-          echo "::set-output name=short_sha::$(echo "$short_sha" | tr -d '\n')"
+          echo "::set-output name=short_sha::$(echo "$short_sha")"
 
       - name: Build, tag, and push the image to ECR
         id: build-image
         env:
-          COMMIT_TAG: ${{ secrets.REPO_NAME }}/medicare:${{ steps.short_sha.outputs.short_sha }}"
+          COMMIT_TAG: ${{ secrets.REPO_NAME }}/medicare:${{ steps.short_sha.outputs.short_sha }}
           IMAGE_TAG: ${{  secrets.REPO_NAME }}/medicare:latest
         run: |
           echo "Building docker container"
