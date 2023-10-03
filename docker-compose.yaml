@@ -7,4 +7,13 @@ services:
       - 'MARIADB_ROOT_PASSWORD=verysecret'
       - 'MARIADB_USER=myuser'
     ports:
-      - '3306'
+      - '3306:3306'
+
+  medicare:
+    image: 'medicare'
+    environment:
+      - 'DB_HOST=mariadb'
+      - 'DB_USER=myuser'
+      - 'DB_PASSWORD=verysecret'
+    volumes:
+      - ./uploads:/tmp/uploads
