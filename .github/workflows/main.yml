@@ -49,6 +49,8 @@ jobs:
       - name: Login to AWS ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: public
 
       - name: Download Artifacts
         uses: actions/download-artifact@v3
@@ -59,7 +61,7 @@ jobs:
       - name: Build, tag, and push the image to ECR
         id: build-image
         env:
-          IMAGE_TAG: ${{ secrets.REPO_NAME }}:latest
+          IMAGE_TAG: ${{  steps.login-ecr.outputs.registry  }}/medicare:latest
         run: |
           echo "Building docker container"
           docker build -t $IMAGE_TAG .
