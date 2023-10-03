@@ -61,7 +61,7 @@ jobs:
       - name: Build, tag, and push the image to ECR
         id: build-image
         env:
-          IMAGE_TAG: ${{  steps.login-ecr.outputs.registry  }}/medicare:latest
+          IMAGE_TAG: ${{  secrets.REPO_NAME }}/medicare:latest
         run: |
           echo "Building docker container"
           docker build -t $IMAGE_TAG .
