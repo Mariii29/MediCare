@@ -17,5 +17,6 @@ services:
       - 'DB_HOST=mariadb'
       - 'DB_USER=myuser'
       - 'DB_PASSWORD=verysecret'
+      - STORAGE=./uploads
     volumes:
-      - ./uploads:/tmp/uploads
+      - ./uploads:/opt/medicare
