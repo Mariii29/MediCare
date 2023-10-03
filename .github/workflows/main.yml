@@ -11,17 +11,6 @@ jobs:
     name: Build Spring Boot Application
     runs-on: ubuntu-latest
 
-    services:
-      localhost:
-        image: "mariadb:latest"
-        env:
-          MARIADB_DATABASE: medicare
-          MARIADB_USER: root
-          MARIADB_PASSWORD: welcome
-          MARIADB_ROOT_PASSWORD: welcome
-        ports:
-          - 3306:3306
-    
     steps:
       - uses: actions/checkout@v4
 
