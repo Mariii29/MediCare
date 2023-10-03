@@ -30,7 +30,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-output
-          path: build/libs/
+          path: |
+            build/libs/
+            Dockerfile
+
   build_docker_image:
     name: Build Docker Image and Push to ECR
     needs: build
