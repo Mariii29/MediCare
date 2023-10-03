@@ -1,6 +1,7 @@
 services:
   mariadb:
     image: 'mariadb:latest'
+    container_name: mariadb
     environment:
       - 'MARIADB_DATABASE=mydatabase'
       - 'MARIADB_PASSWORD=secret'
@@ -11,6 +12,7 @@ services:
 
   medicare:
     image: 'medicare'
+    container_name: medicare
     environment:
       - 'DB_HOST=mariadb'
       - 'DB_USER=myuser'
