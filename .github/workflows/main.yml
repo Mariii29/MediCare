@@ -30,15 +30,15 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-output
-          path: |
-            build/libs/
-            Dockerfile
+          path: build/libs/
 
   build_docker_image:
     name: Build Docker Image and Push to ECR
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -54,9 +54,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-output
-          path: |
-            build/libs/
-            Dockerfile
+          path: build/libs/
 
       - name: Build, tag, and push the image to ECR
         id: build-image
