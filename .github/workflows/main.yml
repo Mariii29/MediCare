@@ -54,7 +54,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-output
-          path: build/libs/
+          path: |
+            build/libs/
+            Dockerfile
 
       - name: Build, tag, and push the image to ECR
         id: build-image
