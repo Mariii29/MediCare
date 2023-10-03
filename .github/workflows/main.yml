@@ -86,5 +86,5 @@ jobs:
           # Access to EC2 granted, now we deploy
           cd /opt/medicare/ &&
           docker compose pull &&
-          docker compose up --force-recreate
+          docker compose up --force-recreate --detach
           '
