@@ -60,7 +60,9 @@ jobs:
 
       - name: Get Short SHA
         id: short_sha
-        run: echo "::set-output name=short_sha::$(git rev-parse --short HEAD)"
+        run: |
+          short_sha=$(git rev-parse --short HEAD)
+          echo "::set-output name=short_sha::$(echo "$short_sha" | tr -d '\n')"
 
       - name: Build, tag, and push the image to ECR
         id: build-image
