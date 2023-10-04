@@ -58,15 +58,23 @@ jobs:
           name: build-output
           path: build/libs/
 
+      - name: Get Short SHA
+        id: short_sha
+        run: |
+          short_sha=$(git rev-parse --short HEAD)
+          echo "::set-output name=short_sha::$(echo "$short_sha")"
+
       - name: Build, tag, and push the image to ECR
         id: build-image
         env:
+          COMMIT_TAG: ${{ secrets.REPO_NAME }}/medicare:${{ steps.short_sha.outputs.short_sha }}
           IMAGE_TAG: ${{  secrets.REPO_NAME }}/medicare:latest
         run: |
           echo "Building docker container"
-          docker build -t $IMAGE_TAG .
+          docker build -t $IMAGE_TAG -t $COMMIT_TAG .
           echo "Pushing image to ECR"
           docker push $IMAGE_TAG
+          docker push $COMMIT_TAG
           echo "::set-output name=$IMAGE_TAG"
 
   deploy_to_ec2:
